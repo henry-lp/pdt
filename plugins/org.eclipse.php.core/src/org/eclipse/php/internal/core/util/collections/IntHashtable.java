@@ -23,7 +23,7 @@ public class IntHashtable implements IntMap, Cloneable, Serializable {
 	/**
 	 * The hash table data.
 	 */
-	private transient Entry table[];
+	private transient Entry table;
 
 	/**
 	 * The total number of entries in the hash table.
@@ -885,6 +885,9 @@ public class IntHashtable implements IntMap, Cloneable, Serializable {
 
 		@Override
 		public Object next() {
+			if (!hasNext()) {
+				throw new java.util.NoSuchElementException();
+			}
 			if (modCount != expectedModCount) {
 				throw new ConcurrentModificationException();
 			}
