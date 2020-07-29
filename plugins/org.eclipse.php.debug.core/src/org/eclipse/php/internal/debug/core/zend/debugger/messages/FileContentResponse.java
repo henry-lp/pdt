@@ -30,7 +30,7 @@ public class FileContentResponse extends DebugMessageResponseImpl implements IDe
 	public static final int SUCCESS = 0;
 	public static final int FILES_IDENTICAL = 302;
 
-	private byte content[] = null;
+	private byte content = null;
 
 	/*
 	 * (non-Javadoc)
@@ -102,7 +102,7 @@ public class FileContentResponse extends DebugMessageResponseImpl implements IDe
 	 * @return content as string
 	 */
 	public String getContentAsString() {
-		return content.toString();
+		return java.util.Arrays.toString(content);
 	}
 
 }
