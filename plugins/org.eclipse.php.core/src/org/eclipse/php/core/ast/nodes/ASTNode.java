@@ -304,31 +304,7 @@ public abstract class ASTNode implements Visitable {
 		visitor.postVisit(this);
 	}
 
-	/**
-	 * Accepts the given visitor on a type-specific visit of the current node.
-	 * This method must be implemented in all concrete AST node types.
-	 * <p>
-	 * General template for implementation on each concrete ASTNode class:
-	 * 
-	 * <pre>
-	 * <code>
-	 * boolean visitChildren = visitor.visit(this);
-	 * if (visitChildren) {
-	 *    // visit children in normal left to right reading order
-	 *    ... acceptChild();
-	 * }
-	 * visitor.endVisit(this);
-	 * </code>
-	 * </pre>
-	 * 
-	 * Note that the caller (<code>accept</code>) take cares of invoking
-	 * <code>visitor.preVisit(this)</code> and
-	 * <code>visitor.postVisit(this)</code>.
-	 * </p>
-	 * 
-	 * @param visitor
-	 *            the visitor object
-	 */
+	
 	abstract void accept0(Visitor visitor);
 
 	/**
@@ -498,21 +474,7 @@ public abstract class ASTNode implements Visitable {
 		return internalStructuralPropertiesForType(this.ast.apiLevel);
 	}
 
-	/**
-	 * Returns a list of property descriptors for this node type. Clients must
-	 * not modify the result. This abstract method must be implemented in each
-	 * concrete AST node type.
-	 * <p>
-	 * N.B. This method is package-private, so that the implementations of this
-	 * method in each of the concrete AST node types do not clutter up the API
-	 * doc.
-	 * </p>
-	 * 
-	 * @param apiLevel
-	 *            the API level; one of the <code>AST.JLS*</code> constants
-	 * @return a list of property descriptors (element type:
-	 *         {@link StructuralPropertyDescriptor})
-	 */
+	
 	abstract List<StructuralPropertyDescriptor> internalStructuralPropertiesForType(PHPVersion apiLevel);
 
 	/**
@@ -1352,29 +1314,7 @@ public abstract class ASTNode implements Visitable {
 		return c;
 	}
 
-	/**
-	 * Returns a deep copy of the subtree of AST nodes rooted at this node. The
-	 * resulting nodes are owned by the given AST, which may be different from
-	 * the AST of this node. Even if this node has a parent, the result node
-	 * will be unparented.
-	 * <p>
-	 * This method must be implemented in subclasses.
-	 * </p>
-	 * <p>
-	 * This method does not report pre- and post-clone events. All callers
-	 * should instead call <code>clone(AST)</code> to ensure that pre- and
-	 * post-clone events are reported.
-	 * </p>
-	 * <p>
-	 * N.B. This method is package-private, so that the implementations of this
-	 * method in each of the concrete AST node types do not clutter up the API
-	 * doc.
-	 * </p>
-	 * 
-	 * @param target
-	 *            the AST that is to own the nodes in the result
-	 * @return the root node of the copies subtree
-	 */
+	
 	abstract ASTNode clone0(AST target);
 
 	/**
@@ -1589,6 +1529,9 @@ public abstract class ASTNode implements Visitable {
 			 */
 			@Override
 			public T next() {
+				if (!hasNext()) {
+					throw new java.util.NoSuchElementException();
+				}
 				T result = NodeList.this.store.get(this.position);
 				this.position++;
 				return result;
