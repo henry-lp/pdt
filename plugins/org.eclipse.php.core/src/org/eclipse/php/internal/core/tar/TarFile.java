@@ -42,42 +42,42 @@ public class TarFile {
 	 */
 	public TarFile(File file) throws TarException, IOException {
 		this.file = file;
-
-		InputStream in = new FileInputStream(file);
-		// First, check if it's a GZIPInputStream.
-		try {
-			in = new GZIPInputStream(in);
-		} catch (IOException e) {
-			// If it is not compressed we close
-			// the old one and recreate
-			in.close();
-			in = new FileInputStream(file);
+		try (java.io.InputStream in = new java.io.FileInputStream(file)) {
+			// First, check if it's a GZIPInputStream.
 			try {
-				in = new CBZip2InputStream(in);
-			} catch (IOException e1) {
+				in = new java.util.zip.GZIPInputStream(in);
+			} catch (java.io.IOException e) {
 				// If it is not compressed we close
 				// the old one and recreate
 				in.close();
-				in = new FileInputStream(file);
+				in = new java.io.FileInputStream(file);
 				try {
-					in.read();
-					in.read();
-					in = new CBZip2InputStream(in);
-				} catch (IOException e2) {
+					in = new org.eclipse.php.internal.core.tar.CBZip2InputStream(in);
+				} catch (java.io.IOException e1) {
 					// If it is not compressed we close
 					// the old one and recreate
 					in.close();
-					in = new FileInputStream(file);
+					in = new java.io.FileInputStream(file);
+					try {
+						in.read();
+						in.read();
+						in = new org.eclipse.php.internal.core.tar.CBZip2InputStream(in);
+					} catch (java.io.IOException e2) {
+						// If it is not compressed we close
+						// the old one and recreate
+						in.close();
+						in = new java.io.FileInputStream(file);
+					}
 				}
 			}
+			try {
+				entryEnumerationStream = new org.eclipse.php.internal.core.tar.TarInputStream(in);
+			} catch (org.eclipse.php.internal.core.tar.TarException ex) {
+				in.close();
+				throw ex;
+			}
+			curEntry = entryEnumerationStream.getNextEntry();
 		}
-		try {
-			entryEnumerationStream = new TarInputStream(in);
-		} catch (TarException ex) {
-			in.close();
-			throw ex;
-		}
-		curEntry = entryEnumerationStream.getNextEntry();
 	}
 
 	/**

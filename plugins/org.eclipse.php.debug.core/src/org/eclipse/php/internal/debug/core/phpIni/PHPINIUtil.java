@@ -210,15 +210,14 @@ public class PHPINIUtil {
 
 		if (PHPDebugPlugin.DEBUG) {
 			System.out.println("\nPHP.ini contents:\n---------------------"); //$NON-NLS-1$
-			try {
-				BufferedReader r = new BufferedReader(new FileReader(tempIniFile));
-				String line;
+			try (java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader(tempIniFile))) {
+				java.lang.String line;
 				while ((line = r.readLine()) != null) {
-					System.out.println(line);
-				}
+					java.lang.System.out.println(line);
+				} 
 				r.close();
-				System.out.println();
-			} catch (IOException e) {
+				java.lang.System.out.println();
+			} catch (java.io.IOException e) {
 			}
 		}
 

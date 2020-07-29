@@ -900,25 +900,13 @@ public abstract class AbstractModelTests extends SuiteOfTestCases {
 
 	public static void storeFile(File dest, URL url) throws IOException {
 		InputStream input = null;
-		OutputStream output = null;
-		try {
-			input = new BufferedInputStream(url.openStream());
-
-			output = new BufferedOutputStream(new FileOutputStream(dest));
-
+		try (java.io.OutputStream output = new java.io.BufferedOutputStream(new java.io.FileOutputStream(dest))) {
+			input = new java.io.BufferedInputStream(url.openStream());
 			// Simple copy
 			int ch = -1;
-			while ((ch = input.read()) != -1) {
+			while ((ch = input.read()) != (-1)) {
 				output.write(ch);
-			}
-		} finally {
-			if (input != null) {
-				input.close();
-			}
-
-			if (output != null) {
-				output.close();
-			}
+			} 
 		}
 	}
 

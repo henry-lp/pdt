@@ -1002,295 +1002,287 @@ public final class PHPSyntaxColoringPage extends PreferencePage implements IWork
 		NonExistingPHPFileEditorInput input = new NonExistingPHPFileEditorInput(fileStore, "PHPSyntax"); //$NON-NLS-1$
 
 		File realFile = input.getPath(input).toFile();
-
-		try {
-			FileOutputStream fos = new FileOutputStream(realFile);
+		try (java.io.FileOutputStream fos = new java.io.FileOutputStream(realFile)) {
 			fos.write(fDocument.get().getBytes());
 			fos.close();
-			DLTKUIPlugin.getDocumentProvider().connect(input);
-			final ISourceModule sourceModule = DLTKUIPlugin.getDocumentProvider().getWorkingCopy(input);
+			org.eclipse.dltk.ui.DLTKUIPlugin.getDocumentProvider().connect(input);
+			final org.eclipse.dltk.core.ISourceModule sourceModule = org.eclipse.dltk.ui.DLTKUIPlugin.getDocumentProvider().getWorkingCopy(input);
 			if (sourceModule != null) {
-				ASTParser parser = ASTParser.newParser(PHPVersion.getLatestVersion(), false, true, sourceModule);
+				org.eclipse.php.core.ast.nodes.ASTParser parser = org.eclipse.php.core.ast.nodes.ASTParser.newParser(org.eclipse.php.core.PHPVersion.getLatestVersion(), false, true, sourceModule);
 				parser.setSource(fDocument.get().toCharArray());
-
-				final Program program = parser.createAST(null);
-				List<AbstractSemanticHighlighting> highlightings = new ArrayList<>();
-
+				final org.eclipse.php.core.ast.nodes.Program program = parser.createAST(null);
+				java.util.List<org.eclipse.php.internal.ui.editor.highlighter.AbstractSemanticHighlighting> highlightings = new java.util.ArrayList<>();
 				highlightings.add(new StaticFieldHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return StaticFieldHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.StaticFieldHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new StaticMethodHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return StaticMethodHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.StaticMethodHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new ConstantHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return ConstantHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.ConstantHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new FieldHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return FieldHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.FieldHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new FunctionHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return FunctionHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.FunctionHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new MethodHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return MethodHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.MethodHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new ClassHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return ClassHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.ClassHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new InternalClassHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return InternalClassHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.InternalClassHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new InternalFunctionHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return InternalFunctionHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.InternalFunctionHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new ParameterVariableHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return ParameterVariableHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.ParameterVariableHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new SuperGlobalHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return SuperGlobalHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.SuperGlobalHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new InternalConstantHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return InternalConstantHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.InternalConstantHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new DeprecatedHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return DeprecatedHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.DeprecatedHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new TaskTagHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return TaskTagHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.TaskTagHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new VarDocCommentHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return VarDocCommentHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.VarDocCommentHighlighting.class.getName();
 					}
 				});
 				highlightings.add(new VarDocHighlighting() {
-					@Override
-					protected Program getProgram(IStructuredDocumentRegion region) {
+					@java.lang.Override
+					protected org.eclipse.php.core.ast.nodes.Program getProgram(IStructuredDocumentRegion region) {
 						return program;
 					}
 
-					@Override
-					public ISourceModule getSourceModule() {
+					@java.lang.Override
+					public org.eclipse.dltk.core.ISourceModule getSourceModule() {
 						return sourceModule;
 					}
 
-					@Override
-					public String getPreferenceKey() {
-						return VarDocHighlighting.class.getName();
+					@java.lang.Override
+					public java.lang.String getPreferenceKey() {
+						return org.eclipse.php.internal.ui.preferences.VarDocHighlighting.class.getName();
 					}
 				});
-
-				Collections.sort(highlightings);
-
-				for (Iterator<AbstractSemanticHighlighting> iterator = highlightings.iterator(); iterator.hasNext();) {
-					AbstractSemanticHighlighting abstractSemanticHighlighting = iterator.next();
-					Position[] positions = abstractSemanticHighlighting.consumes(program);
-
-					if (positions != null && positions.length > 0) {
-						highlightingPositionMap.put(abstractSemanticHighlighting.getPreferenceKey(), positions);
-
+				java.util.Collections.sort(highlightings);
+				for (java.util.Iterator<org.eclipse.php.internal.ui.editor.highlighter.AbstractSemanticHighlighting> iterator = highlightings.iterator(); iterator.hasNext();) {
+					org.eclipse.php.internal.ui.editor.highlighter.AbstractSemanticHighlighting abstractSemanticHighlighting = iterator.next();
+					org.eclipse.jface.text.Position[] positions = abstractSemanticHighlighting.consumes(program);
+					if ((positions != null) && (positions.length > 0)) {
+						org.eclipse.php.internal.ui.preferences.PHPSyntaxColoringPage.highlightingPositionMap.put(abstractSemanticHighlighting.getPreferenceKey(), positions);
 					}
 				}
 			}
-			DLTKUIPlugin.getDocumentProvider().disconnect(input);
-		} catch (CoreException e1) {
+			org.eclipse.dltk.ui.DLTKUIPlugin.getDocumentProvider().disconnect(input);
+		} catch (org.eclipse.core.runtime.CoreException e1) {
 			e1.printStackTrace();
-		} catch (IOException e) {
+		} catch (java.io.IOException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 		}
 		realFile.delete();

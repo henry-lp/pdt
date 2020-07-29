@@ -63,16 +63,14 @@ public class HTMLReporter {
 	 *            file path
 	 */
 	private void readFile(String file) {
-		try {
-			BufferedReader is = new BufferedReader(new InputStreamReader(
-					FileLocator.openStream(ProfilerUiPlugin.getDefault().getBundle(), new Path(file), false)));
-			String line = null;
+		try (java.io.BufferedReader is = new java.io.BufferedReader(new java.io.InputStreamReader(org.eclipse.core.runtime.FileLocator.openStream(org.eclipse.php.profile.ui.ProfilerUiPlugin.getDefault().getBundle(), new org.eclipse.core.runtime.Path(file), false)))) {
+			java.lang.String line = null;
 			while ((line = is.readLine()) != null) {
 				fWriter.println(line);
-			}
+			} 
 			is.close();
-		} catch (Exception e) {
-			ProfilerUiPlugin.log(e);
+		} catch (java.lang.Exception e) {
+			org.eclipse.php.profile.ui.ProfilerUiPlugin.log(e);
 		}
 	}
 

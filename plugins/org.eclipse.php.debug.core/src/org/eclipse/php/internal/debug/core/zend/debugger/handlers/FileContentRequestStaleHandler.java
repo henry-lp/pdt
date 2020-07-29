@@ -352,10 +352,11 @@ public class FileContentRequestStaleHandler extends AbstractFileContentRequestHa
 		}
 		// TODO - There is no handle of file encoding!
 		byte[] bytes = new byte[(int) length];
-		DataInputStream in = new DataInputStream(new FileInputStream(file));
-		in.readFully(bytes);
-		in.close();
-		return bytes;
+		try (java.io.DataInputStream in = new java.io.DataInputStream(new java.io.FileInputStream(file))) {
+			in.readFully(bytes);
+			in.close();
+			return bytes;
+		}
 	}
 
 	// Read and returns all the bytes from the given file URI.

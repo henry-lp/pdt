@@ -362,22 +362,23 @@ public class INIFileModifier {
 	 * @throws IOException
 	 */
 	protected void read() throws IOException {
-		BufferedReader r = new BufferedReader(new FileReader(configFile));
-		String line;
-		INIFileSection currentSection = new INIFileSection(GLOBAL_SECTION);
-		sections.add(currentSection);
-		while ((line = r.readLine()) != null) {
-			line = line.trim();
-			Matcher m = SECTION_PATTERN.matcher(line);
-			if (m.matches()) {
-				String sectionName = m.group(1);
-				currentSection = new INIFileSection(sectionName);
-				sections.add(currentSection);
-			} else {
-				currentSection.lines.add(line);
-			}
+		try (java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader(configFile))) {
+			java.lang.String line;
+			org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.INIFileSection currentSection = new org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.INIFileSection(org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.GLOBAL_SECTION);
+			sections.add(currentSection);
+			while ((line = r.readLine()) != null) {
+				line = line.trim();
+				java.util.regex.Matcher m = org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.SECTION_PATTERN.matcher(line);
+				if (m.matches()) {
+					java.lang.String sectionName = m.group(1);
+					currentSection = new org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.INIFileSection(sectionName);
+					sections.add(currentSection);
+				} else {
+					currentSection.lines.add(line);
+				}
+			} 
+			r.close();
 		}
-		r.close();
 	}
 
 	/**
