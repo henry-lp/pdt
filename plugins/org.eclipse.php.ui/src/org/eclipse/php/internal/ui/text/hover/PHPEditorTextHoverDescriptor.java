@@ -68,12 +68,12 @@ public class PHPEditorTextHoverDescriptor {
 					p2 = Integer.valueOf(e2.getAttribute(PRIORITY_ATTRIBUTE)).intValue();
 				} catch (NumberFormatException e) {
 				}
-				return (int) Math.signum(p2 - p1);
+				return ((int) (java.lang.Math.signum((float) p2 - p1)));
 			}
 		});
 
 		PHPEditorTextHoverDescriptor[] hoverDescs = createDescriptors(elements);
-		initializeFromPreferences(hoverDescs);
+		org.eclipse.php.internal.ui.text.hover.PHPEditorTextHoverDescriptor.initializeFromPreferences(hoverDescs);
 		return hoverDescs;
 	}
 
