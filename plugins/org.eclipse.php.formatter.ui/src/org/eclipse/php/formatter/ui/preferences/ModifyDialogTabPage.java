@@ -181,8 +181,6 @@ public abstract class ModifyDialogTabPage {
 	 * Wrapper around a textfied which requests an integer input of a given range.
 	 */
 	protected final class NumberPreference extends Preference {
-
-		private final int fMinValue, fMaxValue;
 		private final Text fNumberText;
 
 		protected int fSelected;
@@ -362,7 +360,7 @@ public abstract class ModifyDialogTabPage {
 			} else {
 				fSelected = input;
 			}
-			if (fSelected != fOldSelected) {
+			if (!fSelected.equals(fOldSelected)) {
 				setChanged();
 				fNumberText.setText(fSelected);
 			}
@@ -373,7 +371,7 @@ public abstract class ModifyDialogTabPage {
 			final String errorText = fInputValidator != null ? fInputValidator.isValid(text) : null;
 			if (errorText == null) {
 				updateStatus(null);
-				if (fSelected != text) {
+				if (!fSelected.equals(text)) {
 					fSelected = text;
 					setChanged();
 				}

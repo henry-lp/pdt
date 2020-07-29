@@ -402,7 +402,7 @@ public class PHPIndexingVisitor extends PHPIndexingVisitorExtension {
 						modifiers |= IPHPModifiers.AccVariadic;
 					}
 				}
-				if (type == NULL_VALUE && doc != null) {
+				if (type.equals(org.eclipse.php.internal.core.index.PHPIndexingVisitor.NULL_VALUE) && doc != null) {
 					type = getParamType(doc, arg.getName(), type);
 				}
 
