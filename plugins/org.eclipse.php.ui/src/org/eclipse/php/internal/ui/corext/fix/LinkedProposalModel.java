@@ -55,6 +55,9 @@ public class LinkedProposalModel {
 
 				@Override
 				public LinkedProposalPositionGroup next() {
+					if (!hasNext()) {
+						throw new java.util.NoSuchElementException();
+					}
 					return null;
 				}
 
