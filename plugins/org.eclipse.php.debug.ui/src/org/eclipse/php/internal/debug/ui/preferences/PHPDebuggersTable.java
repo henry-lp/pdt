@@ -47,7 +47,7 @@ public class PHPDebuggersTable {
 	private TableViewer fPHPDebuggers;
 	private Button fSettingsButton;
 	// column weights
-	private float fWeight1 = 4.9F / 5F;
+	private float fWeight1 = (double) 4.9F / (double) 5.0F ;
 	// ignore column re-sizing when the table is being resized
 	private boolean fResizingTable = false;
 
@@ -237,9 +237,9 @@ public class PHPDebuggersTable {
 		}
 		switch (col) {
 		case 0:
-			return 4.9F / 5F;
+			return (double) 4.9F / (double) 5.0F ;
 		default:
-			return 4.9F / 5F;
+			return (double) 4.9F / (double) 5.0F ;
 		}
 	}
 
