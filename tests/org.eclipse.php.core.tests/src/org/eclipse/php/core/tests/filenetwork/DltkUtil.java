@@ -214,42 +214,43 @@ public class DltkUtil {
 		InputStream zipIn = new FileInputStream(zipPath);
 		byte[] buf = new byte[8192];
 		File destDir = new File(destDirPath);
-		ZipInputStream zis = new ZipInputStream(zipIn);
-		FileOutputStream fos = null;
-		try {
-			ZipEntry zEntry;
-			while ((zEntry = zis.getNextEntry()) != null) {
-				// if it is empty directory, create it
-				if (zEntry.isDirectory()) {
-					new File(destDir, zEntry.getName()).mkdirs();
-					continue;
-				}
-				// if it is a file, extract it
-				File outFile = new File(destDir, zEntry.getName());
-				// create directory for a file
-				outFile.getParentFile().mkdirs();
-				// write file
-				fos = new FileOutputStream(outFile);
-				int n = 0;
-				while ((n = zis.read(buf)) >= 0) {
-					fos.write(buf, 0, n);
-				}
-				fos.close();
-			}
-		} catch (IOException ioe) {
-			if (fos != null) {
-				try {
-					fos.close();
-				} catch (IOException ioe2) {
-				}
-			}
-		} finally {
+		try (java.util.zip.ZipInputStream zis = new java.util.zip.ZipInputStream(zipIn)) {
+			java.io.FileOutputStream fos = null;
 			try {
-				zipIn.close();
-				if (zis != null) {
-					zis.close();
+				java.util.zip.ZipEntry zEntry;
+				while ((zEntry = zis.getNextEntry()) != null) {
+					// if it is empty directory, create it
+					if (zEntry.isDirectory()) {
+						new java.io.File(destDir, zEntry.getName()).mkdirs();
+						continue;
+					}
+					// if it is a file, extract it
+					java.io.File outFile = new java.io.File(destDir, zEntry.getName());
+					// create directory for a file
+					outFile.getParentFile().mkdirs();
+					// write file
+					fos = new java.io.FileOutputStream(outFile);
+					int n = 0;
+					while ((n = zis.read(buf)) >= 0) {
+						fos.write(buf, 0, n);
+					} 
+					fos.close();
+				} 
+			} catch (java.io.IOException ioe) {
+				if (fos != null) {
+					try {
+						fos.close();
+					} catch (java.io.IOException ioe2) {
+					}
 				}
-			} catch (IOException ioe) {
+			} finally {
+				try {
+					zipIn.close();
+					if (zis != null) {
+						zis.close();
+					}
+				} catch (java.io.IOException ioe) {
+				}
 			}
 		}
 	}

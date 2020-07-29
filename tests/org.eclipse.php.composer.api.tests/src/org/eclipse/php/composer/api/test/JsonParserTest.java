@@ -113,22 +113,19 @@ public class JsonParserTest extends ComposertTestCase {
 
 	@Test
 	public void testParserOrder() {
-		try {
-			Reader core = loadFile("keeko-core.json");
-			BufferedReader reader = new BufferedReader(loadFile("keeko-core.json"));
-			StringBuilder out = new StringBuilder();
-			String line = null;
-			String ls = System.getProperty("line.separator");
-
+		try (java.io.BufferedReader reader = new java.io.BufferedReader(loadFile("keeko-core.json"))) {
+			java.io.Reader core = loadFile("keeko-core.json");
+			java.lang.StringBuilder out = new java.lang.StringBuilder();
+			java.lang.String line = null;
+			java.lang.String ls = java.lang.System.getProperty("line.separator");
 			while ((line = reader.readLine()) != null) {
 				out.append(line);
 				out.append(ls);
-			}
-			String contents = out.toString().trim();
-
-			ComposerPackage phpPackage = new ComposerPackage(core);
+			} 
+			java.lang.String contents = out.toString().trim();
+			org.eclipse.php.composer.api.ComposerPackage phpPackage = new org.eclipse.php.composer.api.ComposerPackage(core);
 			assertEquals(contents, phpPackage.toJson());
-		} catch (Exception e) {
+		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 			fail();
 		}

@@ -71,7 +71,6 @@ public class CodeCoverageView extends ViewPart {
 			String fileName = codeCoverageData.getLocalFileName();
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IWorkspaceRoot root = workspace.getRoot();
-			InputStream inputStream = null;
 			try {
 				Path path = new Path(fileName);
 				IFile file = root.getFile(path);
@@ -89,24 +88,24 @@ public class CodeCoverageView extends ViewPart {
 				if (inputStream == null) {
 					File localFile = new File(fileName);
 					if (localFile.exists()) {
-						inputStream = new FileInputStream(localFile);
+						try (java.io.InputStream inputStream = new java.io.FileInputStream(localFile)) 
 					}
 				}
 			} catch (IOException e) {
 				DebugUIPlugin.log(e);
 			}
 			if (inputStream != null) {
-				try {
-					BufferedReader is = new BufferedReader(new InputStreamReader(inputStream));
-					StringBuilder fileContents = new StringBuilder();
-					String line = null;
+				try (java.io.BufferedReader is = new java.io.BufferedReader(new java.io.InputStreamReader(inputStream))) {
+					java.lang.StringBuilder fileContents = new java.lang.StringBuilder();
+					java.lang.String line = null;
 					while ((line = is.readLine()) != null) {
 						fileContents.append(line);
-						fileContents.append("\n"); //$NON-NLS-1$
-					}
+						fileContents.append("\n");// $NON-NLS-1$
+
+					} 
 					fSourceViewer.setText(fileContents.toString());
-				} catch (IOException e) {
-					DebugUIPlugin.log(e);
+				} catch (java.io.IOException e) {
+					org.eclipse.debug.internal.ui.DebugUIPlugin.log(e);
 				}
 			} else {
 				RemoteDebugger.requestRemoteFile(new IRemoteFileContentRequestor() {

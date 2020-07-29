@@ -77,13 +77,14 @@ public class FileNetworkTests extends AbstractModelTests {
 	protected String getSavedHierarchy(String subfolder) throws CoreException, IOException {
 		IFile file = getFile(getFilePath(subfolder + "/hierarchy"));
 		StringBuilder buf = new StringBuilder();
-		BufferedReader r = new BufferedReader(new InputStreamReader(file.getContents()));
-		String l;
-		while ((l = r.readLine()) != null) {
-			buf.append(l).append("\n");
+		try (java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(file.getContents()))) {
+			java.lang.String l;
+			while ((l = r.readLine()) != null) {
+				buf.append(l).append("\n");
+			} 
+			r.close();
+			return buf.toString();
 		}
-		r.close();
-		return buf.toString();
 	}
 
 	public static Test suite() {

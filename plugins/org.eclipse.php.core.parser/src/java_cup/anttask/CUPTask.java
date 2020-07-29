@@ -177,20 +177,17 @@ public class CUPTask extends Task
      * @return the package folder structure
      */
     protected String inspect(String cupfile){
-	try{
-	BufferedReader br = new BufferedReader(new FileReader(cupfile));
-	while (br.ready()){
-	    String line = br.readLine();
-	    if ((line.startsWith("package"))&&(line.indexOf(";")!=-1))
-		{
-		    String result = line.substring(8,line.indexOf(";"));
-		    result = result.replace('.',System.getProperty("file.separator").charAt(0));
-		    return System.getProperty("file.separator") + result;
+		try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(cupfile))) {
+			while (br.ready()) {
+				java.lang.String line = br.readLine();
+				if (line.startsWith("package") && (line.indexOf(";") != (-1))) {
+					java.lang.String result = line.substring(8, line.indexOf(";"));
+					result = result.replace('.', java.lang.System.getProperty("file.separator").charAt(0));
+					return java.lang.System.getProperty("file.separator") + result;
+				}
+			} 
+		} catch (java.io.IOException ioe) {
 		}
-	    
-	}
-	}catch (IOException ioe){
-	}
 	return "";
     }
 
