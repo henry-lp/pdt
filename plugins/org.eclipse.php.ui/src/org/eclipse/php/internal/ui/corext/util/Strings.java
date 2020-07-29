@@ -73,7 +73,7 @@ public class Strings {
 
 		String inputString = styledString.getString();
 		String string = TextProcessor.process(inputString);
-		if (string != inputString) {
+		if (!string.equals(inputString)) {
 			insertMarks(styledString, inputString, string);
 		}
 		return styledString;
@@ -97,7 +97,7 @@ public class Strings {
 
 		String inputString = styledString.getString();
 		String string = TextProcessor.process(inputString, TextProcessor.getDefaultDelimiters() + additionalDelimiters);
-		if (string != inputString) {
+		if (!string.equals(inputString)) {
 			insertMarks(styledString, inputString, string);
 		}
 		return styledString;

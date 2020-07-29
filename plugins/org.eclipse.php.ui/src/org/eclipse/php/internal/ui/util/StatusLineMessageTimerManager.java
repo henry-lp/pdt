@@ -70,7 +70,7 @@ public class StatusLineMessageTimerManager {
 				@Override
 				public void run() {
 					if (StatusLineMessageTimerManager.statusLineManager == statusLineManager
-							&& message == StatusLineMessageTimerManager.message) {
+							&& message.equals(org.eclipse.php.internal.ui.util.StatusLineMessageTimerManager.message) ) {
 						if (isError) {
 							StatusLineMessageTimerManager.statusLineManager.setErrorMessage(""); //$NON-NLS-1$
 						} else {

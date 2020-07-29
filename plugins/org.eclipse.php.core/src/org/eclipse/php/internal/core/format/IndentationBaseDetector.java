@@ -149,7 +149,7 @@ public class IndentationBaseDetector {
 		// Fix bug #201688
 		if (((checkedLineBeginState == PHPPartitionTypes.PHP_MULTI_LINE_COMMENT)
 				|| (checkedLineBeginState == PHPPartitionTypes.PHP_DOC))
-				&& (checkedLineBeginState == forLineEndState)) {
+				&& checkedLineBeginState.equals(forLineEndState) ) {
 			// the whole document
 			final IStructuredDocumentRegion sdRegion = document.getRegionAtCharacterOffset(lineStartOffset);
 			// the whole PHP script
@@ -183,7 +183,7 @@ public class IndentationBaseDetector {
 				}
 			}
 		}
-		return lineShouldIndent(checkedLineBeginState, checkedLineEndState) || forLineEndState == checkedLineBeginState;
+		return lineShouldIndent(checkedLineBeginState, checkedLineEndState) || forLineEndState.equals(checkedLineBeginState) ;
 	}
 
 	private int getMultiLineStatementStartOffset(int currLineIndex) throws BadLocationException {
@@ -401,7 +401,7 @@ public class IndentationBaseDetector {
 	 * @since 2.2
 	 */
 	private boolean shouldNotConsiderAsIndentationBase(final String currentState, final String forState) {
-		return currentState != forState && isMultilineType(currentState);
+		return !currentState.equals(forState) && isMultilineType(currentState);
 	}
 
 	private boolean isMultilineAfterBraceless(int checkedOffset) {

@@ -388,7 +388,7 @@ public class INIFileModifier {
 	protected void flush() throws IOException {
 		PrintWriter w = new PrintWriter(new FileWriter(configFile));
 		for (INIFileSection section : sections) {
-			if (section.name != GLOBAL_SECTION) {
+			if (!section.name.equals(org.eclipse.php.internal.debug.core.phpIni.INIFileModifier.GLOBAL_SECTION)) {
 				w.println('[' + section.name + ']');
 			}
 			for (String line : section.lines) {
